@@ -20,4 +20,13 @@ pipeline {
             }
         }
     }
+
+    post {
+        success {
+            echo '✅ Build succeeded! Great job.'
+        }
+        failure {
+            echo '❌ Build failed. Please check logs.'
+        }
+    }
 }
