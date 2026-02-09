@@ -4,29 +4,31 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                echo 'Checking out source code from Git'
+                git url: 'https://github.com/joshnajohnson/JenkinsJoshna.git', branch: 'master'
             }
         }
 
-        stage('Build') {
+        stage('Compile') {
             steps {
-                echo 'Building the project'
+                echo 'Compiling source code...'
+                bat 'javac Hello.java'
             }
         }
 
-        stage('Test') {
+        stage('Archive Artifacts') {
             steps {
-                echo 'Running tests'
+                echo 'Archiving build artifacts...'
+                archiveArtifacts artifacts: '**/*.class', fingerprint: true
             }
         }
     }
 
     post {
         success {
-            echo '✅ Build succeeded! Great job.'
+            echo '✅ CI pipeline completed successfully!'
         }
         failure {
-            echo '❌ Build failed. Please check logs.'
+            echo '❌ CI pipeline failed. Please check logs.'
         }
     }
 }
